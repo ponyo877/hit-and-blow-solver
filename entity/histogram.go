@@ -1,9 +1,12 @@
 package entity
 
-import "math"
+import (
+	"math"
+)
 
 type Histogram struct {
-	mp map[Feedback]int
+	digit int
+	mp    map[Feedback]int
 }
 
 func NewHistgram(e Numbers, c []Numbers) *Histogram {
@@ -12,7 +15,7 @@ func NewHistgram(e Numbers, c []Numbers) *Histogram {
 		f := candidate.Feedback(e)
 		mp[*f]++
 	}
-	return &Histogram{mp}
+	return &Histogram{len(e), mp}
 }
 
 func (h *Histogram) Feedbacks() []Feedback {
@@ -25,9 +28,13 @@ func (h *Histogram) Feedbacks() []Feedback {
 
 func (h *Histogram) Entropy() float64 {
 	var e float64
-	for _, val := range h.mp {
+	for f, val := range h.mp {
+		buf := 1.0
+		if f == *NewFeedback(h.digit, 0) {
+			buf = 0.95
+		}
 		absv := math.Abs(float64(val))
-		e += absv * math.Log(1+absv)
+		e += buf * absv * math.Log(1+absv)
 	}
 	return e
 }

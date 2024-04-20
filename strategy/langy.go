@@ -29,6 +29,9 @@ func (l *LandyStrategy) Estimate() entity.Numbers {
 	if len(ca) == 1 {
 		return ca[0]
 	}
+	if len(ca) == 2 {
+		return ca[0]
+	}
 	for _, estimate := range allNumbers {
 		e := entity.NewHistgram(estimate, ca).Entropy()
 		if e < mine {

@@ -3,8 +3,8 @@ package entity
 import "fmt"
 
 type Feedback struct {
-	hit  int
-	blow int
+	Hit  int
+	Blow int
 }
 
 func NewFeedback(hit int, blow int) *Feedback {
@@ -12,13 +12,13 @@ func NewFeedback(hit int, blow int) *Feedback {
 }
 
 func (f Feedback) String() string {
-	return fmt.Sprintf("%dH%dB", f.hit, f.blow)
+	return fmt.Sprintf("%dH%dB", f.Hit, f.Blow)
 }
 
 func (f *Feedback) IncHit() {
-	f.hit++
+	f.Hit++
 }
 
 func (f *Feedback) IncBlow() {
-	f.blow++
+	f.Blow++
 }

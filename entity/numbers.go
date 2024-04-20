@@ -1,8 +1,12 @@
 package entity
 
-import "slices"
+import (
+	"slices"
+)
 
 type Numbers []int
+
+var allChache []Numbers = []Numbers{}
 
 func (n Numbers) Feedback(estimate Numbers) *Feedback {
 	f := NewFeedback(0, 0)
@@ -87,6 +91,10 @@ func permutations(iterable []int, r int) []Numbers {
 }
 
 func AllNumbers(digits int) []Numbers {
+	if len(allChache) > 0 {
+		return allChache
+	}
 	numberList := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-	return permutations(numberList, digits)
+	allChache = permutations(numberList, digits)
+	return allChache
 }
