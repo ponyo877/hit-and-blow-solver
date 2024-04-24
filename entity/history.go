@@ -3,16 +3,12 @@ package entity
 import "reflect"
 
 type History struct {
-	digit   int
+	solver  *Solver
 	history []*Hint
 }
 
-func NewHistory(d int) *History {
-	return &History{d, []*Hint{}}
-}
-
-func (h *History) Digit() int {
-	return h.digit
+func NewHistory(s *Solver) *History {
+	return &History{s, []*Hint{}}
 }
 
 func (h *History) IsEmpty() bool {
@@ -29,7 +25,7 @@ func (h *History) Pop() {
 
 func (h *History) Candidate() NumbersList {
 	candidate := NumbersList{}
-	for _, numbers := range AllNumbers(h.digit) {
+	for _, numbers := range h.solver.AllPatterns() {
 		var isBreak bool
 		for _, hint := range h.history {
 			if !reflect.DeepEqual(hint.feedback, numbers.Feedback(hint.numbers)) {
@@ -45,5 +41,5 @@ func (h *History) Candidate() NumbersList {
 }
 
 func (h *History) FeedbackSelect(e Numbers) []Feedback {
-	return NewHistgram(e, h.Candidate()).Feedbacks()
+	return NewHistgram(h.solver, e, h.Candidate()).Feedbacks()
 }

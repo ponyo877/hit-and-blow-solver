@@ -7,8 +7,8 @@ type Feedback struct {
 	Blow int
 }
 
-func NewFeedback(hit int, blow int) *Feedback {
-	return &Feedback{hit, blow}
+func NewFeedback(h int, b int) *Feedback {
+	return &Feedback{h, b}
 }
 
 func (f Feedback) String() string {

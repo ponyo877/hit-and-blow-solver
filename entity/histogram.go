@@ -5,22 +5,22 @@ import (
 )
 
 type Histogram struct {
-	digit int
-	mp    map[Feedback]int
+	solver       *Solver
+	feedbackbMap map[Feedback]int
 }
 
-func NewHistgram(e Numbers, c []Numbers) *Histogram {
+func NewHistgram(s *Solver, e Numbers, c []Numbers) *Histogram {
 	mp := map[Feedback]int{}
 	for _, candidate := range c {
 		f := candidate.Feedback(e)
 		mp[*f]++
 	}
-	return &Histogram{len(e), mp}
+	return &Histogram{s, mp}
 }
 
 func (h *Histogram) Feedbacks() []Feedback {
 	fs := []Feedback{}
-	for f := range h.mp {
+	for f := range h.feedbackbMap {
 		fs = append(fs, f)
 	}
 	return fs
@@ -28,9 +28,9 @@ func (h *Histogram) Feedbacks() []Feedback {
 
 func (h *Histogram) Entropy() float64 {
 	var e float64
-	for f, val := range h.mp {
+	for f, val := range h.feedbackbMap {
 		buf := 1.0
-		if f == *NewFeedback(h.digit, 0) {
+		if f == *NewFeedback(h.solver.Digit(), 0) {
 			buf = 0.95
 		}
 		absv := math.Abs(float64(val))

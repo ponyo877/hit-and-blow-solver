@@ -12,11 +12,13 @@ import (
 )
 
 func main() {
-	d := 3
-	history := entity.NewHistory(d)
+	disit := 3
+	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	solver := entity.NewSolver(disit, numbers)
+	history := entity.NewHistory(solver)
 	var i int
 	for i = 0; i <= 10; i++ {
-		estimate := strategy.NewLandyStrategy(history).Estimate()
+		estimate := strategy.NewLandyStrategy(solver, history).Estimate()
 		ca := history.Candidate()
 		fs := history.FeedbackSelect(estimate)
 		if len(ca) == 1 {
@@ -57,22 +59,21 @@ func main() {
 		h := entity.NewHint(estimate, &fs[i])
 		history.Push(h)
 	}
-	// measure()
+	// measure(disit, numbers)
 }
 
-func measure() {
+// measure: measure the average number of attempts to solve the problem.
+func measure(disit int, numbers []int) {
 	ansHist := map[int]int{}
 	sum := 0
-	d := 3
-	all := entity.AllNumbers(d)
-	for _, answer := range all {
-		// fmt.Printf("%d, ", answer)
-		history := entity.NewHistory(d)
+	solver := entity.NewSolver(disit, numbers)
+	for _, answer := range solver.AllPatterns() {
+		history := entity.NewHistory(solver)
 		var i int
 		for i = 1; i <= 10; i++ {
-			estimate := strategy.NewLandyStrategy(history).Estimate()
+			estimate := strategy.NewLandyStrategy(solver, history).Estimate()
 			f := answer.Feedback(estimate)
-			if reflect.DeepEqual(f, entity.NewFeedback(d, 0)) {
+			if reflect.DeepEqual(f, entity.NewFeedback(solver.Digit(), 0)) {
 				break
 			}
 			h := entity.NewHint(estimate, f)
@@ -91,7 +92,7 @@ func measure() {
 	for _, k := range s {
 		fmt.Printf("%2d: %3d\n", k, ansHist[k])
 	}
-	fmt.Printf("avg: %6.4f\n", float64(sum)/float64(len(all)))
+	fmt.Printf("avg: %6.4f\n", float64(sum)/float64(len(solver.AllPatterns())))
 }
 
 type EstimateStrategy interface {
