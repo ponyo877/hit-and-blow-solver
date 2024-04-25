@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"reflect"
 	"sort"
 	"strings"
+	"time"
 
 	"github.com/manifoldco/promptui"
 	"github.com/ponyo877/hit-and-blow-solver.git/entity"
@@ -16,9 +18,12 @@ func main() {
 	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 	solver := entity.NewSolver(disit, numbers)
 	history := entity.NewHistory(solver)
+	allPatterns := solver.AllPatterns()
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	init := allPatterns[r.Intn(len(allPatterns))]
 	var i int
 	for i = 0; i <= 10; i++ {
-		estimate := strategy.NewLandyStrategy(solver, history).Estimate()
+		estimate := strategy.NewLandyStrategy(solver, history).Estimate(init)
 		ca := history.Candidate()
 		fs := history.FeedbackSelect(estimate)
 		if len(ca) == 1 {
@@ -67,11 +72,12 @@ func measure(disit int, numbers []int) {
 	ansHist := map[int]int{}
 	sum := 0
 	solver := entity.NewSolver(disit, numbers)
+	init := entity.Numbers{0, 1, 2}
 	for _, answer := range solver.AllPatterns() {
 		history := entity.NewHistory(solver)
 		var i int
 		for i = 1; i <= 10; i++ {
-			estimate := strategy.NewLandyStrategy(solver, history).Estimate()
+			estimate := strategy.NewLandyStrategy(solver, history).Estimate(init)
 			f := answer.Feedback(estimate)
 			if reflect.DeepEqual(f, entity.NewFeedback(solver.Digit(), 0)) {
 				break

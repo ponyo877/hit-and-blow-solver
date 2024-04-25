@@ -6,8 +6,6 @@ import (
 
 type Numbers []int
 
-var allChache []Numbers = []Numbers{}
-
 func (n Numbers) Feedback(estimate Numbers) *Feedback {
 	f := NewFeedback(0, 0)
 	for i, num := range estimate {

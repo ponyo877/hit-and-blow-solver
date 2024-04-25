@@ -2,8 +2,6 @@ package strategy
 
 import (
 	"math"
-	"math/rand"
-	"time"
 
 	"github.com/ponyo877/hit-and-blow-solver.git/entity"
 )
@@ -17,13 +15,11 @@ func NewLandyStrategy(s *entity.Solver, h *entity.History) *LandyStrategy {
 	return &LandyStrategy{s, h}
 }
 
-func (l *LandyStrategy) Estimate() entity.Numbers {
+func (l *LandyStrategy) Estimate(init entity.Numbers) entity.Numbers {
 	mine := math.MaxFloat64
 	minNumbers := entity.Numbers{}
-	allPatterns := l.solver.AllPatterns()
 	if l.history.IsEmpty() {
-		r := rand.New(rand.NewSource(time.Now().UnixNano()))
-		return allPatterns[r.Intn(len(allPatterns))]
+		return init
 	}
 	ca := l.history.Candidate()
 	// Victory conditions
@@ -33,7 +29,7 @@ func (l *LandyStrategy) Estimate() entity.Numbers {
 	if len(ca) == 2 {
 		return ca[0]
 	}
-	for _, estimate := range allPatterns {
+	for _, estimate := range l.solver.AllPatterns() {
 		e := entity.NewHistgram(l.solver, estimate, ca).Entropy()
 		if e < mine {
 			mine = e

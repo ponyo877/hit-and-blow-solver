@@ -2,6 +2,7 @@ package entity
 
 import (
 	"math"
+	"sort"
 )
 
 type Histogram struct {
@@ -28,12 +29,18 @@ func (h *Histogram) Feedbacks() []Feedback {
 
 func (h *Histogram) Entropy() float64 {
 	var e float64
-	for f, val := range h.feedbackbMap {
+	keys := make([]Feedback, 0, len(h.feedbackbMap))
+	for k := range h.feedbackbMap {
+		keys = append(keys, k)
+	}
+	sort.Slice(keys, func(i, j int) bool { return keys[i].String() < keys[j].String() })
+
+	for _, f := range keys {
 		buf := 1.0
 		if f == *NewFeedback(h.solver.Digit(), 0) {
 			buf = 0.95
 		}
-		absv := math.Abs(float64(val))
+		absv := math.Abs(float64(h.feedbackbMap[f]))
 		e += buf * absv * math.Log(1+absv)
 	}
 	return e
