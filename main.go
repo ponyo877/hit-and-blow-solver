@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/manifoldco/promptui"
-	"github.com/ponyo877/hit-and-blow-solver.git/entity"
-	"github.com/ponyo877/hit-and-blow-solver.git/strategy"
+	"github.com/ponyo877/hit-and-blow-solver/entity"
+	"github.com/ponyo877/hit-and-blow-solver/strategy"
 )
 
 func main() {

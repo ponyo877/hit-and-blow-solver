@@ -1,4 +1,4 @@
-module github.com/ponyo877/hit-and-blow-solver.git
+module github.com/ponyo877/hit-and-blow-solver
 
 go 1.21.4
 

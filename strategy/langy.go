@@ -3,7 +3,7 @@ package strategy
 import (
 	"math"
 
-	"github.com/ponyo877/hit-and-blow-solver.git/entity"
+	"github.com/ponyo877/hit-and-blow-solver/entity"
 )
 
 type LandyStrategy struct {
