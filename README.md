@@ -4,6 +4,9 @@ It is a heuristic solver and does not provide a complete analytical solution.
 The solving method is based on the approach by B. Landy described on page 3 of the following paper (in Japanese):
 https://www.tanaka.ecc.u-tokyo.ac.jp/ktanaka/papers/gpw96.pdf
 
+# Demo
+![demo](Hit&BlowDemo.gif)
+
 ## Installation
 To install the CLI tool, run the following command:
 ```bash
@@ -58,6 +61,3 @@ estimate:  [4 6 7]
 You choose Feedback: 1H0B
 You win!:  [3 0 7]
 ```
-
-# Demo
-![demo](Hit&BlowDemo.gif)
