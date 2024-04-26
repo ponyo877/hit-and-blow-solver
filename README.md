@@ -7,7 +7,7 @@ https://www.tanaka.ecc.u-tokyo.ac.jp/ktanaka/papers/gpw96.pdf
 ## Installation
 To install the CLI tool, run the following command:
 ```bash
-go install https://github.com/ponyo877/hit-and-blow-solver
+go install github.com/ponyo877/hit-and-blow-solver@v1.0.1
 ```
 
 # Usage
@@ -25,6 +25,39 @@ The tool will prompt you through the following steps:
 3. [Automatic] A list of possible feedback options for the guess sequence will be displayed.
 4. [You] Select the actual feedback from your opponent.
 
-# Demo
+```bash
+❯ hit-and-blow-solver
+estimate:  [6 9 8]
+Use the arrow keys to navigate: ↓ ↑ → ←  and / toggles search
+Feedbacks?
+    1H1B
+    0H2B
+    2H0B
+  👉 1H2B
+    3H0B
+    0H3B
+    0H1B
+    1H0B
+    0H0B
+```
 
-Insert a GIF demo here.
+
+```bash
+❯ hit-and-blow-solver
+estimate:  [5 3 2]
+👉 0H1B
+You choose Feedback: 0H1B
+estimate:  [0 1 3]
+👉 0H2B
+You choose Feedback: 0H2B
+estimate:  [2 5 0]
+👉 0H1B
+You choose Feedback: 0H1B
+estimate:  [4 6 7]
+👉 1H0B
+You choose Feedback: 1H0B
+You win!:  [3 0 7]
+```
+
+# Demo
+![demo](Hit&BlowDemo.gif)
